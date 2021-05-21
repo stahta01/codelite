@@ -214,7 +214,7 @@ public:
                      keyExists("--define-variable") || keyExists("--prefix") || keyExists("--wxcfg") ||
                      keyExists("--libs") || keyExists("--cflags") || keyExists("--cxxflags") ||
                      keyExists("--cppflags") || keyExists("--rcflags") || keyExists("--list") || keyExists("--debug") ||
-                     keyExists("--unicode") || keyExists("--static") || keyExists("--universal") ||
+                     keyExists("--unicode") || keyExists("--static") || keyExists("--universal") || keyExists("--rescomp") ||
                      keyExists("--release") || keyExists("--version") || keyExists("--basename") || keyExists("--cc") ||
                      keyExists("--cxx") || keyExists("--ld") || keyExists("-v");
 
@@ -232,6 +232,7 @@ public:
             std::cerr << "  --cflags                    Outputs all pre-processor and compiler flags.\n";
             std::cerr << "  --cxxflags                  Same as --cflags but for C++.\n";
             std::cerr << "  --rcflags                   Outputs all resource compiler flags. [UNTESTED]\n";
+            std::cerr << "  --rescomp                   Outputs resource compiler with flags.\n";
             std::cerr << "  --libs                      Outputs all linker flags.\n";
             std::cerr << std::endl;
             std::cerr << "  --debug[=yes|no]            Uses a debug configuration if found.\n";
@@ -1063,6 +1064,7 @@ public:
         po["cc"] = m_programs.cc;
         po["cxx"] = m_programs.cxx;
         po["ld"] = m_programs.ld;
+        po["windres"] = m_programs.windres;
 
         getVariablesValues(po, cl, cfg);
     }
@@ -1364,6 +1366,7 @@ public:
         po["cc"] = m_programs.cc;
         po["cxx"] = m_programs.cxx;
         po["ld"] = m_programs.ld;
+        po["windres"] = m_programs.windres;
 
         getVariablesValues(po, cl, cfg);
     }
@@ -1681,6 +1684,7 @@ public:
         po["cc"] = m_programs.cc;
         po["cxx"] = m_programs.cxx;
         po["ld"] = m_programs.ld;
+        po["windres"] = m_programs.windres;
 
         getVariablesValues(po, cl, cfg);
     }
@@ -1897,6 +1901,7 @@ public:
         po["cc"] = m_programs.cc;
         po["cxx"] = m_programs.cxx;
         po["ld"] = m_programs.ld;
+        po["windres"] = m_programs.windres;
 
         getVariablesValues(po, cl, cfg);
     }
@@ -2371,6 +2376,8 @@ void outputFlags(Options& po, const CmdLineOptions& cl)
         std::cout << po["libs"] << std::endl;
     if(cl.keyExists("--rcflags"))
         std::cout << po["rcflags"] << std::endl;
+    if(cl.keyExists("--rescomp"))
+        std::cout << po["windres"] << " " << po["rcflags"] << std::endl;
     if(cl.keyExists("--release"))
         std::cout << po["release"];
     if(cl.keyExists("--version"))
