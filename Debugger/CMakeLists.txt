@@ -31,4 +31,12 @@ endif()
 set_target_properties(${PLUGIN_NAME} PROPERTIES PREFIX "")
 target_link_libraries(${PLUGIN_NAME} ${LINKER_OPTIONS} libcodelite plugin libgdbparser)
 
-cl_install_debugger(${PLUGIN_NAME})
+if(MINGW AND WITH_POSIX_LAYOUT)
+    install(
+        TARGETS DebuggerGDB
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/codelite/debuggers
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/codelite/debuggers
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/codelite/debuggers)
+else()
+    cl_install_debugger(${PLUGIN_NAME})
+endif()
