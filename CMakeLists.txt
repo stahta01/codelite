@@ -57,8 +57,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+include(CMakeDependentOption)
 option(WITH_CHATAI "Enable ChatAI plugin" OFF)
 option(BUILD_TESTING "Build test executables" OFF)
+cmake_dependent_option(WITH_POSIX_LAYOUT "Use Posix Layout under MINGW" OFF MINGW OFF)
+cmake_dependent_option(WITH_MSYS2_PKG_LAYOUT "Use MSys2 Package Layout under MINGW" OFF MINGW OFF)
+mark_as_advanced(FORCE WITH_MSYS2_PKG_LAYOUT)
 
 # Set this option to "ON" in order to get CMake standard/expected behavior
 set(RETAIN_CACHED_VALUES
