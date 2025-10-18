@@ -148,7 +148,11 @@ wxString clStandardPaths::GetPluginsDirectory() const
     wxString pluginsDir = PLUGINS_DIR;
 #else
 #ifdef USE_POSIX_LAYOUT
-    wxFileName path(GetInstallDir() + wxT(PLUGINS_DIR), "");
+    #ifdef WITH_MSYS2_PKG_LAYOUT
+        wxFileName path(wxT(PLUGINS_DIR), "");
+    #else
+        wxFileName path(GetInstallDir() + wxT(PLUGINS_DIR), "");
+    #endif
 #else
     wxFileName path(GetDataDir(), "");
     path.AppendDir("plugins");
@@ -165,7 +169,11 @@ wxString clStandardPaths::GetDataDir() const
     }
 
 #ifdef USE_POSIX_LAYOUT
-    wxFileName path(wxStandardPaths::Get().GetDataDir() + wxT(INSTALL_DIR), "");
+    #ifdef WITH_MSYS2_PKG_LAYOUT
+        wxFileName path(wxT(INSTALL_DIR), "");
+    #else
+        wxFileName path(wxStandardPaths::Get().GetDataDir() + wxT(INSTALL_DIR), "");
+    #endif
     return path.GetPath();
 #else
     return wxStandardPaths::Get().GetDataDir();
@@ -265,7 +273,11 @@ wxString clStandardPaths::GetInstallDir() const
     return GetBinFolder();
 #else
 #ifdef USE_POSIX_LAYOUT
-    wxFileName path(wxStandardPaths::Get().GetDataDir(), "");
+    #ifdef WITH_MSYS2_PKG_LAYOUT
+        wxFileName path(PREFIX_DIR, "");
+    #else
+        wxFileName path(wxStandardPaths::Get().GetDataDir(), "");
+    #endif
     return path.GetPath();
 #else
     return GetBinFolder();

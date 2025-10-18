@@ -499,7 +499,7 @@ bool CodeLiteApp::OnInit()
         SetPluginLoadPolicy(PP_FromList);
     }
 
-#if defined(__WXMSW__)
+#if defined(__WXMSW__) && !defined(WITH_MSYS2_PKG_LAYOUT)
     wxString newBaseDir;
     if (m_parser.Found(wxT("b"), &newBaseDir)) {
         wxFileName bd(newBaseDir, wxEmptyString);
