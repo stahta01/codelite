@@ -1109,12 +1109,12 @@ void CodeLiteApp::AdjustPathForMSYSIfNeeded()
 
 void CodeLiteApp::PrintUsage(const wxCmdLineParser& m_parser)
 {
-#ifdef __WXMSW__
-    m_parser.Usage();
-#else
+//#ifdef __WXMSW__
+    //m_parser.Usage();
+//#else
     wxString usageString = m_parser.GetUsageString();
     std::cout << usageString.mb_str(wxConvUTF8).data() << std::endl;
-#endif
+//#endif
 }
 
 void CodeLiteApp::OpenFolder(const wxString& path)
