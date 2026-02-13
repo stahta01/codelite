@@ -72,14 +72,16 @@ endif()
 if(MINGW)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install")
   set(CL_PREFIX "${CMAKE_INSTALL_PREFIX}")
-  if(NOT DEFINED ENV{MSYS2_BASE})
-    message(
-      FATAL_ERROR
-        "Set the environment variable MSYS2_BASE to point to the installation of your MSYS2. e.g. export MSYS2_BASE=C:/msys64"
-    )
-  endif()
-  set(MSYS2_BASE $ENV{MSYS2_BASE})
 
+  if(NOT FOR_MSYS2_PACKAGE)
+    if(NOT DEFINED ENV{MSYS2_BASE})
+      message(
+        FATAL_ERROR
+          "Set the environment variable MSYS2_BASE to point to the installation of your MSYS2. e.g. export MSYS2_BASE=C:/msys64"
+      )
+    endif()
+    set(MSYS2_BASE $ENV{MSYS2_BASE})
+  endif()
   string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" CODELITE_ARCH)
   message(STATUS "Building ${CODELITE_ARCH} architecture")
   string(TOLOWER "$ENV{MSYSTEM}" MSYSTEM)
@@ -488,7 +490,7 @@ if(UNIX AND NOT APPLE)
 endif(UNIX AND NOT APPLE)
 
 # find wxWidgets once
-if(MINGW)
+if(MINGW AND NOT FOR_MSYS2_PACKAGE)
   if(NOT WXWIN)
     message(FATAL_ERROR "Missing -DWXWIN=<wxWidgets/root/install/dir>")
   endif()
@@ -1154,7 +1156,7 @@ if(NOT WXC_APP)
   codelite_install_svgs()
 endif()
 
-if(MINGW)
+if(MINGW AND NOT FOR_MSYS2_PACKAGE)
   # determine MSYS2 path
   write_file(${CMAKE_BINARY_DIR}/msys2-environment "export WXWIN=${WXWIN}")
   write_file(${CMAKE_BINARY_DIR}/msys2-environment
@@ -1238,7 +1240,7 @@ if(MINGW)
 
 endif()
 
-if(MINGW AND NOT WXC_APP)
+if(MINGW AND NOT WXC_APP AND NOT FOR_MSYS2_PACKAGE)
   # configure the innosetup file
   configure_file(${CL_SRC_ROOT}/InnoSetup/codelite64_mingw.iss.in
                  ${BUILD_DIRECTORY}/codelite64_mingw.iss)

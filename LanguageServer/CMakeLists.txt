@@ -52,7 +52,7 @@ if(APPLE)
         PERMISSIONS ${EXE_PERM})
 endif()
 
-if(MINGW)
+if(MINGW AND NOT FOR_MSYS2_PACKAGE)
     # install clangd
     msys_install_clang64_tool(clangd.exe ${CL_INSTALL_BIN})
 endif()

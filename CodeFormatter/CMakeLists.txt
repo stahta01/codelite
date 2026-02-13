@@ -33,7 +33,7 @@ target_link_libraries(${PLUGIN_NAME} ${LINKER_OPTIONS} libcodelite plugin)
 
 cl_install_plugin(${PLUGIN_NAME})
 
-if(MINGW)
+if(MINGW AND NOT FOR_MSYS2_PACKAGE)
     # install clang-format
     msys_install_clang64_tool(clang-format.exe ${CL_INSTALL_BIN})
 endif()

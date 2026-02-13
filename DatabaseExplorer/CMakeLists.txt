@@ -20,7 +20,7 @@ if(WITH_MYSQL)
   endif(${LIBMYSQLCLIENT} STREQUAL "LIBMYSQLCLIENT-NOTFOUND")
   add_compile_definitions(DBL_USE_MYSQL=1)
 
-  if(MINGW)
+  if(MINGW AND NOT FOR_MSYS2_PACKAGE)
     install(FILES "${MSYS2_BASE}/${MSYSTEM}/bin/libmariadb.dll"
             DESTINATION "${CL_INSTALL_BIN}")
     msys_list_deps(${MSYS2_BASE}/${MSYSTEM}/bin/libmariadb.dll LIBMARIA_DEPS)
@@ -36,7 +36,7 @@ if(WITH_POSTGRES)
 
   add_compile_definitions(DBL_USE_POSTGRES=1)
 
-  if(MINGW)
+  if(MINGW AND NOT FOR_MSYS2_PACKAGE)
     install(FILES "${MSYS2_BASE}/${MSYSTEM}/bin/libpq.dll"
             DESTINATION "${CL_INSTALL_BIN}")
     msys_list_deps(${MSYS2_BASE}/${MSYSTEM}/bin/libpq.dll LIBPOSTGRES_DEPS)
