@@ -185,6 +185,9 @@ write_file("${CMAKE_BINARY_DIR}/post_install.cmake"
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations"
 )# Avoid very multiple warnings spam due to deprecated wx methods
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-command-line-argument")
+endif()
 if(UNIX AND NOT APPLE)
   set(CMAKE_CXX_FLAGS
       "${CMAKE_CXX_FLAGS} -isystem /usr/include/harfbuzz -isystem /usr/local/include/harfbuzz"
