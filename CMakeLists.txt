@@ -689,7 +689,7 @@ if(CMAKE_BUILD_TYPE MATCHES Debug OR CMAKE_BUILD_TYPE MATCHES DebugFull)
   message(
     "-- Shared Objects will be written into ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 
-  if(APPLE OR MINGW)
+  if(APPLE OR MINGW AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # Clang compiler on these platforms
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -gdwarf-4 -fstandalone-debug -O0"
     )# No optimization, debug info
